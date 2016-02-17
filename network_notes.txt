@@ -14,3 +14,10 @@ hping3 --scan known 10.87.7.1 -S
 
 # arpwatch datetime :)
 cat /var/lib/arpwatch/arp.dat  | sort -k 3 | gawk '{ print strftime("%d/%m/%Y %H:%M", $3),$1,$2}'
+
+#
+# send an ARP reply, saying "192.168.1.77 is at 0:1:2:3:4:5", sending it to 192.168.1.14 who is at 00:76:12:a2:44:70
+nemesis arp -d eth3 -r -S 192.168.1.77 -h 0:1:2:3:4:5 -D 192.168.1.14 -m 00:76:12:a2:44:70
+
+# send an ICMP ECHO "ping" packet to 192.168.1.14 with spoofed source 192.168.1.77
+nemesis icmp -qE -S 192.168.1.77 -D 192.168.1.14
