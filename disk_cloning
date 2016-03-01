@@ -1,0 +1,4 @@
+The parameter for dd that does this is count=. Your last partition ends on 103, and your unit size is 8225280 bytes 
+(according to the fdisk -l output). So you could simply modify your command this way:
+
+dd if=/dev/sdb of=myimage.img bs=8225280 count=103
