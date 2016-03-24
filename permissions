@@ -1,0 +1,14 @@
+# default group permission on new file base on owner default group 
+chmod g+ws .
+
+# default user permission
+chmod u+ws .
+
+# every new created file will be writable by group mebership
+umask 002
+
+# it meas 777 - 002 = 775 :)
+
+# questo forza che la creazione di qualsiasi cosa faccia group a rwx o rx
+#setfacl -d -m g::rwx /<directory>  //set group to rwx default 
+#setfacl -d -m o::rx /<directory>   //set other
