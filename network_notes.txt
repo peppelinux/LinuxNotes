@@ -21,3 +21,6 @@ nemesis arp -d eth3 -r -S 192.168.1.77 -h 0:1:2:3:4:5 -D 192.168.1.14 -m 00:76:1
 
 # send an ICMP ECHO "ping" packet to 192.168.1.14 with spoofed source 192.168.1.77
 nemesis icmp -qE -S 192.168.1.77 -D 192.168.1.14
+
+# start iperf in background without creating std output file
+nohup iperf -s >/dev/null 2>&1 &
