@@ -5,6 +5,8 @@ So you could simply modify your command this way:
 
 dd if=/dev/sda of=/dev/sdb bs=512 count=7847936
 
+# all the disk/partition in a safe way
+dd if=/dev/sdd of=/dev/sdc bs=64K conv=noerror,sync
 
 # for containers, it pushes all changes in a running remote server (then reboot it!)
 rsync -aAXv -e ssh --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"}\
