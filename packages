@@ -1,0 +1,3 @@
+
+# use aptitude format strings and see packages version
+aptitude search zabbix -F "%c %p %d %V"
