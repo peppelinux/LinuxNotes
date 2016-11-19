@@ -32,11 +32,16 @@ mount /dev/pve/vm-103-disk-1 /test/
 Montare una immagine raw kvm:
 ============================
 # Create device maps from partition tables
+# view
+kpartx -l /dev/pve/vm-102-disk-1
 
 kpartx -av /dev/pve/vm-102-disk-1
 
 # add map pve-vm--102--disk--1p1 (251:15): 0 1024000 linear /dev/pve/vm-102-disk-1 2048
 # add map pve-vm--102--disk--1p2 (251:16): 0 68177920 linear /dev/pve/vm-102-disk-1 1026048
+
+# mount
+mount /dev/mapper/pve-vm--102--disk--1p2 /mnt/test/
 
 # per detach
 kpartx -dv /dev/pve/vm-102-disk-1
@@ -60,3 +65,11 @@ fdisk vm-102-disk-1.raw
 
 losetup -o 525336576 /dev/loop0 vm-102-disk-1.raw
 mount /dev/loop0 /mnt/test
+
+Spostare un disco, rilevare il path
+=============================
+
+pvesm path local-lvm:vm-102-disk-1
+# /dev/pve/vm-102-disk-1
+
+
