@@ -1,0 +1,26 @@
+lvs
+vgscan
+lvscan
+
+# montare proxmox a freddo (per recupero vm da un lvm):
+
+vgscan
+vgchange -ay
+mkdir /media/USB
+mount /dev/pve/root /media/USB/
+mount /dev/cciss/c0d0p1 /media/USB/boot
+mount -t proc proc /media/USB/proc/
+mount -t sysfs sys /media/USB/sys
+mount -o bind /dev /media/USB/dev
+chroot /media/USB
+
+# per vedere il contenuto dei containers lxc
+pct config 103
+pvesm path local-lvm:vm-103-disk-1
+
+lvmdiskscan
+lvdisplay | more
+# detto ciò:
+mount /dev/pve/vm-103-disk-1 /test/
+
+# 
