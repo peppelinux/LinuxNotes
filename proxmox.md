@@ -25,7 +25,7 @@ pvesm path local-lvm:vm-103-disk-1
 
 lvmdiskscan
 lvdisplay | more
-# detto ciò:
+'detto ciò:'
 mount /dev/pve/vm-103-disk-1 /test/
 
 Montare una immagine raw kvm:
