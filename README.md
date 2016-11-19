@@ -1,1 +1,3 @@
-# bash_tricks
+# Linux notes<br>
+
+something usefull, sometimes.
