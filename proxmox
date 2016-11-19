@@ -1,9 +1,12 @@
+Comandi riepilogativi
+====================
 lvs
 vgscan
 lvscan
 pvscan
 
-# montare proxmox a freddo (per recupero vm da un lvm):
+Montare proxmox a freddo (per recupero vm da un lvm):
+========================
 
 vgscan
 vgchange -ay
@@ -15,7 +18,8 @@ mount -t sysfs sys /media/USB/sys
 mount -o bind /dev /media/USB/dev
 chroot /media/USB
 
-# per vedere il contenuto dei containers lxc
+Vedere il contenuto dei containers lxc
+======================================
 pct config 103
 pvesm path local-lvm:vm-103-disk-1
 
@@ -24,7 +28,8 @@ lvdisplay | more
 # detto ciò:
 mount /dev/pve/vm-103-disk-1 /test/
 
-# Per montare una immagine raw kvm:
+Montare una immagine raw kvm:
+============================
 # Create device maps from partition tables
 
 kpartx -av /dev/pve/vm-102-disk-1
@@ -35,7 +40,9 @@ kpartx -av /dev/pve/vm-102-disk-1
 # per detach
 kpartx -dv /dev/pve/vm-102-disk-1
 
-# montare una partizione in un file raw
+Montare una partizione in un file raw
+==============================
+
 # leggo i settori = 69206016
 cfdisk vm-102-disk-1.raw
 o
