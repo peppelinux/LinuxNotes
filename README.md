@@ -1,3 +1,3 @@
 # Linux notes<br>
 
-something usefull, sometimes.
+something sometimes usefull
