@@ -1,0 +1,19 @@
+we need to mount these LVs to form the bricks. Use the mount command to do so.
+
+mount /dev/mygroup/thinv1 /bricks/brick1
+
+
+Using the lvm2_setup instructions, in this git repository, you can create one or more bricks. 
+For our testing I created one more brick in “anotherhost” machine. 
+Lets create a Gluster volume from these LVs. Use the following command to do so.
+
+gluster volume create vol1 replica 2 myhost:/bricks/brick1/b1 anotherhost:/bricks/brick1/b1
+
+
+We have a volume with bricks created out of thin LVs. We are now ready to  test and use the snapshot feature. Ah, forgot one thing. You need to first start the volume.
+
+gluster volume start vol1
+
+# reference here:
+
+http://blog.gluster.org/2014/10/gluster-volume-snapshot-howto/
