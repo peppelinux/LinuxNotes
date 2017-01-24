@@ -1,0 +1,48 @@
+
+# do a dd raw image and then navigate inside it
+
+# command
+fdisk -l radius3_cla_8gb_raw.24gen2016.img 
+
+# its output
+Disk radius3_cla_8gb_raw.24gen2016.img: 7,5 GiB, 8011120640 bytes, 15646720 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x0552bca4
+
+Device                             Boot    Start      End  Sectors  Size Id Type
+radius3_cla_8gb_raw.24gen2016.img1 *        2048 14342143 14340096  6,9G 83 Linux
+radius3_cla_8gb_raw.24gen2016.img2      14342144 15646719  1304576  637M 82 Linux swap / Solaris
+##################################
+
+# meaning 
+Since we need to scoot 2048 sectors ahead, and each sector is 512 bytes 
+long, we need to use an offset of 32,256 bytes. This is the needed offset:
+
+2048 * 512 = 1048576
+
+so...
+# command
+mount -o ro,loop,offset=1048576 radius3_cla_8gb_raw.24gen2016.img /mnt/tmp
+
+# if filesystem is corrupted, if it needs a scandisk first, mount cannot mount it, we 
+# need losetup that links image file with linux device:
+
+losetup --offset 1048576  /dev/loop2 radius3_cla_8gb_raw.24gen2016.img
+fsck.ext4 -fy /dev/loop2
+
+# see how many devices was configured with losetup
+losetup -a
+/dev/loop2: [2081]:17598 (/storage/Clonezillas/radius3_cla_8gb_raw.24gen2016.img), offset 1048576
+
+# detach one of them
+losetup -d /dev/loop2
+
+# once repaired with fsck we can also mount with the previuos command (it's only a test, not really needed!)
+mount -o ro,loop,offset=1048576 radius3_cla_8gb_raw.24gen2016.img /mnt/tmp
+
+# ...now works :)
+
+
