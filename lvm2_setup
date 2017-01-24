@@ -1,3 +1,24 @@
+Usefull hints if HD for prototiping aren't available
+
+The loopback device should point to a file and the device size is dependent on the file size. 
+So lets create a file of required length. 
+You can create files by any means but I prefer to use fallocate as it creates big files really fast.
+
+fallocate -l 2G dev1.img
+
+The above command will create a file of size 2GB. 
+If you already have a loopback device then associate the newly created file 
+with the device or else create a loopback device and then associate it. 
+Following command can be used to create a loopback device (loop0).
+
+mknod /dev/loop0 b 7 0
+
+Once we have a loopback device we need to associate it with a file.
+losetup /dev/loop0 dev1.img
+
+You don't need it but if are out of HD... :)
+
+########################################################################
 To create a LVM, we need to run through the following steps.
 
     Select the physical storage devices for LVM
