@@ -1,0 +1,64 @@
+To create a LVM, we need to run through the following steps.
+
+    Select the physical storage devices for LVM
+    Create the Volume Group from Physical Volumes
+    Create Logical Volumes from Volume Group
+
+In this step, we need to choose the physical volumes that will be used to create the LVM. 
+We can create the physical volumes using pvcreate command as shown below.
+
+$ sudo pvcreate /dev/sda6 /dev/sda7 
+Physical volume "/dev/sda6" successfully created                                                 
+Physical volume "/dev/sda7" successfully created 
+
+# check them
+sudo pvscan                                                                   
+  PV /dev/sda6                      lvm2 [1.86 GB]                                                 
+  PV /dev/sda7                      lvm2 [1.86 GB]                                                 
+  Total: 2 [3.72 GB] / in use: 0 [0   ] / in no VG: 2 [3.72 GB]   
+
+You can view the list of physical volumes with attributes like size, physical 
+extent size, total physical extent size, the free space, etc., 
+using pvdisplay command as shown below.
+
+$ sudo pvdisplay 
+
+Volume groups are nothing but a pool of storage that consists of one or more physical volumes. 
+Once you create the physical volume, you can create the volume group (VG) from these physical volumes (PV).
+
+In this example, the volume group vol_grp1 is created from the two physical volumes as shown below.
+
+$ sudo vgcreate vol_grp1 /dev/sda6 /dev/sda7                                  
+  Volume  group "vol_grp1" successfully created          
+
+vgdisplay command lists the created volume groups.
+$ sudo vgdisplay 
+
+Now, everything is ready to create the logical volumes from the volume groups. 
+lvcreate command creates the logical volume with the size of 2GB.
+
+$ sudo lvcreate -l 2G -n logical_vol1 vol_grp1 
+  Logical volume "logical_vol1" created      
+
+Use lvdisplay command as shown below, to view the available logical volumes with its attributes.
+$ sudo lvdisplay    
+
+After creating the appropriate filesystem on the logical volumes, it becomes ready to use for the storage purpose.
+$ sudo  mkfs.ext4 /dev/vol_grp1/logical_vol1 
+
+We can extend the size of the logical volumes after creating it by using lvextend utility as shown below. 
+The changes the size of the logical volume from 2GB to 4GB.
+
+$ sudo lvextend -L4G /dev/vol_grp1/logical_vol1 
+  Extending logical volume logical_vol1 to 4 GB 
+  Logical volume logical_vol1 successfully resized 
+
+We can also ADD additional size to a specific logical volume as shown below.
+
+$ sudo lvextend -L+2G /dev/vol_grp1/logical_vol1 
+  Extending logical volume logical_vol1 to 6 GB
+  Logical volume logical_vol1 successfully resized 
+
+
+
+
