@@ -21,3 +21,7 @@ umask 002
 # questo forza che la creazione di qualsiasi cosa faccia group a rwx o rx
 #setfacl -d -m g::rwx /<directory>  //set group to rwx default 
 #setfacl -d -m o::rx /<directory>   //set other
+
+# delete acl
+setfacl -d -x  group:GROUPNAME
+setfacl -d -x  user:USERNAME
