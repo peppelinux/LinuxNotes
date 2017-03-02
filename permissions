@@ -25,3 +25,10 @@ umask 002
 # delete acl
 setfacl -d -x  group:GROUPNAME
 setfacl -d -x  user:USERNAME
+
+# simpaticamente cieco :)
+setfacl  -m u:UTENTE:--x /var/www/
+setfacl  -m u:UTENTE:--x /var/
+setfacl  -m u:UTENTE:--x /
+setfacl  -m u:UTENTE:--x /home
+
