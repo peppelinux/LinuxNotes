@@ -29,7 +29,7 @@ lvdisplay | more
 #detto ciò:
 mount /dev/pve/vm-103-disk-1 /test/
 
-Montare una immagine raw kvm:
+Montare un dispositivo a blocchi PVE kvm:
 ============================
 # Create device maps from partition tables
 # view
