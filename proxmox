@@ -72,4 +72,14 @@ Spostare un disco, rilevare il path
 pvesm path local-lvm:vm-102-disk-1
 # /dev/pve/vm-102-disk-1
 
+Ripristinare uno snapshot al di fuori di Proxmox
+=============================
+aptitude install lzop
+# decompress it
+lzop -d vzdump-qemu-102-2017_03_20-13_15_45.vma.lzo 
+# this restores raw image and config file
+vma extract vzdump-qemu-102-2017_03_20-13_15_45.vma -v ./restored-vma/
+# migrate from raw to VirtualBox vdi
+VBoxManage convertdd sdb.raw sdb.vdi --format VDI
+
 
