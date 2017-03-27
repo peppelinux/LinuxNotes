@@ -78,6 +78,9 @@ aptitude install lzop
 # decompress it
 lzop -d vzdump-qemu-102-2017_03_20-13_15_45.vma.lzo 
 # this restores raw image and config file
+# https://forum.proxmox.com/threads/vma-archive-restore-outside-of-proxmox.14226/
+# https://forum.proxmox.com/threads/vma-archive-restore-outside-of-proxmox.14226/#post-76387
+# or compile it from: https://git.proxmox.com/?p=pve-qemu-kvm.git;a=summary
 vma extract vzdump-qemu-102-2017_03_20-13_15_45.vma -v ./restored-vma/
 # migrate from raw to VirtualBox vdi
 VBoxManage convertdd sdb.raw sdb.vdi --format VDI
