@@ -150,8 +150,35 @@ mount /dev/mapper/pve-backup1 /storage/
 # check uuid
 blkid
 # /dev/mapper/pve-backup1: UUID="14790fc5-8c39-4557-a275-bf8bfe91557f" TYPE="ext4"
-# add it to fstab
-echo "UUID="14790fc5-8c39-4557-a275-bf8bfe91557f" /storage ext4 defaults 0 2" >> /etc/fstab
-# then add a directory in ProxMox using its web GUI
+# add it to be mount in rc.local
+
+echo > /etc/rc.local <EOF
+/sbin/kpartx  -av /dev/pve/backup
+/bin/mount /dev/mapper/pve-backup1 /storage/
+exit 0
+EOF
+
+echo > /etc/systemd/system/rc-local.service < EOF
+# then enable rc.local in systemd
+[Unit]
+ Description=/etc/rc.local Compatibility
+ ConditionPathExists=/etc/rc.local
+
+[Service]
+ Type=forking
+ ExecStart=/etc/rc.local start
+ TimeoutSec=0
+ StandardOutput=tty
+ RemainAfterExit=yes
+ SysVStartPriority=99
+
+[Install]
+ WantedBy=multi-user.target
+EOF
+
+# enable it
+systemctl enable rc-local
+
+# then add a directory in ProxMox using its web GUI !
 
 
