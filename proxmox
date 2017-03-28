@@ -153,6 +153,7 @@ blkid
 # add it to be mount in rc.local
 
 cat <<EOF  > /etc/rc.local
+#!/bin/sh
 /sbin/kpartx  -av /dev/pve/backup
 /bin/mount /dev/mapper/pve-backup1 /storage/
 exit 0
