@@ -152,33 +152,55 @@ blkid
 # /dev/mapper/pve-backup1: UUID="14790fc5-8c39-4557-a275-bf8bfe91557f" TYPE="ext4"
 # add it to be mount in rc.local
 
-cat <<EOF  > /etc/rc.local
+cat <<EOF  > /etc/rc.mount_lv
 #!/bin/sh
-/sbin/kpartx  -av /dev/pve/backup
-/bin/mount /dev/mapper/pve-backup1 /storage/
+
+start() {
+  exec
+  /sbin/kpartx  -av /dev/pve/backup
+  /bin/mount /dev/mapper/pve-backup1 /storage/
+    
+  exit 0
+}
+
+stop() {
+  exec /bin/umount /dev/mapper/pve-backup1
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop}"
+        exit 1
+esac
+  
 exit 0
 EOF
 
-cat <<EOF  > /etc/systemd/system/rc-local.service
-# then enable rc.local in systemd
+# makes it executable
+chmod +x /etc/rc.mount_lv
+
+cat <<EOF  > /etc/systemd/system/mount_lv.service
 [Unit]
- Description=/etc/rc.local Compatibility
- ConditionPathExists=/etc/rc.local
+Description=Mount custom lv storage
 
 [Service]
- Type=forking
- ExecStart=/etc/rc.local start
- TimeoutSec=0
- StandardOutput=tty
- RemainAfterExit=yes
- SysVStartPriority=99
+Type=oneshot
+ExecStart=/etc/rc.mount_lv start
+ExecStop=/etc/rc.mount_lv stop
+RemainAfterExit=yes
 
 [Install]
- WantedBy=multi-user.target
+WantedBy=multi-user.target
 EOF
 
 # enable it
-systemctl enable rc-local
+systemctl enable mount_lv.service
 
 # then add a directory in ProxMox using its web GUI !
 
