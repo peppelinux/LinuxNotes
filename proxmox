@@ -1,3 +1,11 @@
+Disabilitare PVE subscritions
+====================
+
+rm /etc/apt/sources.list.d/pve-enterprise.list  
+echo "deb http://download.proxmox.com/debian jessie pve-no-subscription" >> /etc/apt/source.list
+aptitude update
+aptitude upgrade
+
 Comandi riepilogativi
 ====================
 lvs
@@ -85,4 +93,29 @@ vma extract vzdump-qemu-102-2017_03_20-13_15_45.vma -v ./restored-vma/
 # migrate from raw to VirtualBox vdi
 VBoxManage convertdd sdb.raw sdb.vdi --format VDI
 
+Removing a volume group (Breaks proxmox if VG is pve !!!)
+================================
+
+# Make sure that no logical volumes are present in the volume group, see later section for how to do this.
+
+gvs
+lvs
+
+# Deactivate the volume group:
+vgchange -a n pve
+        
+#Now you actually remove the volume group:
+vgremove pve
+        
+
+Resize LVM-thin pool
+=============================
+# comandi riepilogativi
+pvs
+vgs
+lvs
+
+lvdisplay /dev/mapper/pve-data
+
+lvreduce -L 160.0G pve/data
 
