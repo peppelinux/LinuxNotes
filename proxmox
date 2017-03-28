@@ -1,4 +1,4 @@
-Disabilitare PVE subscritions
+Disable PVE subscritions
 ====================
 
 rm /etc/apt/sources.list.d/pve-enterprise.list  
@@ -110,6 +110,13 @@ vgremove pve
 
 Resize LVM-thin pool
 =============================
+#Only extension of thin pool is supported  (offline/online).
+#You cannot shrink the thin pool size, you just have to destroy it and recreate it again.
+# example
+
+lvreduce -L 160.0G pve/data
+# Thin pool volumes cannot be reduced in size yet.
+
 # comandi riepilogativi
 pvs
 vgs
@@ -117,5 +124,9 @@ lvs
 
 lvdisplay /dev/mapper/pve-data
 
-lvreduce -L 160.0G pve/data
+# remove lvm-thin pool
+lvremove pve/data
+
+# create it again
+lvcreate -L 160G -T pve/data
 
