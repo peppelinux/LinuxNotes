@@ -108,7 +108,7 @@ vgchange -a n pve
 vgremove pve
         
 
-Resize LVM-thin pool
+Resize LVM-thin pool and use free space as Backup folder :)
 =============================
 #Only extension of thin pool is supported  (offline/online).
 #You cannot shrink the thin pool size, you just have to destroy it and recreate it again.
@@ -130,4 +130,28 @@ lvremove pve/data
 
 # create it again
 lvcreate -L 160G -T pve/data
+
+# now it create another logical volume, it will be used for backup
+lvcreate -L 239.35G -T pve/backup
+
+# production use-case
+lvs
+# make a dos partition
+cfdisk  /dev/pve/backup 
+# get partitions
+kpartx -l /dev/pve/backup
+# activate them
+kpartx -av /dev/pve/backup 
+#add map pve-backup1 (251:10): 0 501217280 linear /dev/pve/backup 2048
+# create fs on it
+mkfs.ext4  /dev/mapper/pve-backup1
+# then mount
+mount /dev/mapper/pve-backup1 /storage/
+# check uuid
+blkid
+# /dev/mapper/pve-backup1: UUID="14790fc5-8c39-4557-a275-bf8bfe91557f" TYPE="ext4"
+# add it to fstab
+echo "UUID="14790fc5-8c39-4557-a275-bf8bfe91557f" /storage ext4 defaults 0 2" >> /etc/fstab
+# then add a directory in ProxMox using its web GUI
+
 
