@@ -124,7 +124,8 @@ lvs
 
 lvdisplay /dev/mapper/pve-data
 
-# remove lvm-thin pool
+# remove lvm-thin pool, this will destroy all the volumes in it
+# please DO backup of VM before do this
 lvremove pve/data
 
 # create it again
