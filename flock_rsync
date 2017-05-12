@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# 
-
+# if a command fails the execution of this script stops
 set -e
  
 scriptname=$(basename $0)
