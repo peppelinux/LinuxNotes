@@ -1,4 +1,6 @@
 #!/bin/bash
+# this scripts works like a wrapper around a command
+# it creates a lock file to prevent parallel execution of a program/command/script
 
 # if you want to run it every day at 8:00 PM
 # 0 20 * * * username /media/nas/Repliche_backupper/rsync_storage_flock.sh
