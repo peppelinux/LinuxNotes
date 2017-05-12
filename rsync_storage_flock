@@ -24,7 +24,6 @@ exec 200>$lock
 ## The code:
 pid=$$
 echo $pid 1>&200
-sleep 10
 echo "Executing command"
 rsync -avzh --exclude={"lost+found"} domainio.eu:/storage/* /media/diatic-nas/Repliche_backupper/ > 
 rsync_logs/backup-$(date +%Y%m%d%H%M%S).log
