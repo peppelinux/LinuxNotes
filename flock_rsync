@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# 
+
+set -e
+ 
+scriptname=$(basename $0)
+lock="/var/run/${scriptname}.lock"
+#~ LOCK_TIMEOUT=28800; #in seconds should be 8 hours
+
+exec 200>$lock
+
+# bash try/catch trick :)
+# -n force fail instead of wait for unlock
+# --timeout ${LOCK_TIMEOUT} -> expires lock !
+{ 
+    flock -n --exclusive 200 
+} || { 
+    echo "Lock file found!" && exit 1 
+}
+ 
+## The code:
+pid=$$
+echo $pid 1>&200
+sleep 10
+echo "Executing command"
+rsync -avzh --exclude={"lost+found"} domainio.eu:/storage/* /media/diatic-nas/Repliche_backupper/ > 
+rsync_logs/backup-$(date +%Y%m%d%H%M%S).log
+echo "Ok"
