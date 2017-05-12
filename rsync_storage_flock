@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# if you want to run it every day at 8:00 PM
+# 0 20 * * * username /media/nas/Repliche_backupper/rsync_storage_flock.sh
+
 # if a command fails the execution of this script stops
 set -e
  
