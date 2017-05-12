@@ -10,6 +10,7 @@ scriptname=$(basename $0)
 lock="/var/run/${scriptname}.lock"
 #~ LOCK_TIMEOUT=28800; #in seconds should be 8 hours
 
+# put file handler (fd) on lock file
 exec 200>$lock
 
 # bash try/catch trick :)
@@ -23,7 +24,9 @@ exec 200>$lock
  
 ## The code:
 pid=$$
+# put pid on fd
 echo $pid 1>&200
+
 echo "Executing command"
 rsync -avzh --exclude={"lost+found"} domainio.eu:/storage/* /media/diatic-nas/Repliche_backupper/ > 
 rsync_logs/backup-$(date +%Y%m%d%H%M%S).log
