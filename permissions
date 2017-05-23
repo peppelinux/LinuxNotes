@@ -7,8 +7,13 @@ chmod g+ws /var/www
 # This will make all newly created files inherit the parent directory's group, instead of the user's.
 find /var/www -type d -exec chmod g+s {} +
 
+# keep in mind to put acl in fstab option to avoid reboot on permission set
 # To set the default group permissions, you will have to use ACLs. Set a "default" ACL:
 setfacl -m "default:group::rwx" /var/www
+
+# Change the directory's ACL to give the group write permissions and to make these permissions inherited by newly created files. Under Linux:
+setfacl -d -m group:web:rwx /path/to/directory
+setfacl -m group:web:rwx /path/to/directory
 
 # default user permission
 chmod u+ws .
