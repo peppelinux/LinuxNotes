@@ -11,3 +11,15 @@ dd if=/dev/sdd of=/dev/sdc bs=64K conv=noerror,sync
 # for containers, it pushes all changes in a running remote server (then reboot it!)
 rsync -aAXv -e ssh --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"}\
 /media/279GB/backups/100/* root@192.168.15.201:/ > backup$(date +%Y%m%d%H%M%S).log
+
+# tar helper
+tar -zcvfp /backup/filename.tgz / \
+--exclude='/dev/*' \
+--exclude='/proc/*' \
+--exclude='/sys/*' \
+--exclude='/tmp/*' \
+--exclude='/run/*' \
+--exclude='/mnt/*' \
+--exclude='/media/*' \
+--exclude='/lost+found/*' \
+--exclude='/home*'
