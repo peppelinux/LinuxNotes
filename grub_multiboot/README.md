@@ -1,4 +1,4 @@
-https://github.com/thias/glim
+http://mbusb.aguslr.com/
 
 http://www.slivermetal.org/2016/09/18/how-to-create-an-hybrid-uefi-gpt-bios-gptmbr-boot-usb-disk/
 
