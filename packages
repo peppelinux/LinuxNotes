@@ -1,3 +1,19 @@
 
 # use aptitude format strings and see packages version
 aptitude search zabbix -F "%c %p %d %V"
+
+# dpkg packages installed backup
+mkdir PackagesBackup; cd PackagesBackup
+lsb_release -a > lsb_release
+cp -R /etc/apt/sources.list* .
+dpkg --get-selections > Package.list
+apt-key exportall > Repo.keys
+
+# restore them
+apt-key add ~/Repo.keys
+cp -R ~/sources.list* /etc/apt/
+apt-get update
+apt-get install dselect
+dselect update
+dpkg --set-selections < Package.list
+apt-get dselect-upgrade -y
