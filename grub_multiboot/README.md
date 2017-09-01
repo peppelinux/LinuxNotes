@@ -4,7 +4,7 @@ http://www.slivermetal.org/2016/09/18/how-to-create-an-hybrid-uefi-gpt-bios-gptm
 
 https://github.com/thias/glim
 
-# first of all create a hybrid uefi gpt bios gptmbr boot disk!
+first of all create a hybrid uefi gpt bios gptmbr boot disk!
 
 git clone https://github.com/aguslr/multibootusb.git
 cd multibootusb
