@@ -5,7 +5,7 @@ http://www.slivermetal.org/2016/09/18/how-to-create-an-hybrid-uefi-gpt-bios-gptm
 https://github.com/thias/glim
 
 
-first of all create a hybrid uefi gpt bios gptmbr boot disk!
+makeUSB.sh will create for you a hybrid uefi gpt bios gptmbr boot disk like the example in the picture
 ![alt text](gparted.png)
 
 git clone https://github.com/aguslr/multibootusb.git
