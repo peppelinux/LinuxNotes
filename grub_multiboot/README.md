@@ -13,10 +13,5 @@ bash makeUSB.sh /dev/sdb
 
 then put isos in its /boot/iso folder
 
-# these commands are useless with makeUSB.sh!
-#export USBMNT=/mnt
-#export USBDEV=sdb
-#ensure that boot partition have bios_grub flag
-#grub-install --boot-directory=${USBMNT:-/mnt}/boot /dev/${USBDEV}
 
 
