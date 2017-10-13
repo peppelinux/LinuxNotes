@@ -1,3 +1,6 @@
+# mariadb suggested: 
+sudo mysql_secure_installation
+
 mysql --version
 systemctl stop mysql
 mysqld_safe --skip-grant-tables --skip-networking
