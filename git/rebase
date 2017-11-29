@@ -1,0 +1,7 @@
+git log
+git rebase -i  cd18ce4a1c4a464382a7e16f4c0d138e6ac17db8
+
+# put squash or fixup inot desidered lines
+git commit
+git checkout master
+git push
