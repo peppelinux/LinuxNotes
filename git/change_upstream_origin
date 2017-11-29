@@ -1,0 +1,5 @@
+git remote rm origin
+git remote add origin $GITREPO_URL
+git config master.remote origin
+git config master.merge refs/heads/master
+git push --set-upstream origin master
