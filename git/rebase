@@ -1,7 +1,13 @@
 git log
 git rebase -i  cd18ce4a1c4a464382a7e16f4c0d138e6ac17db8
-
 # pick in the high lines, squash of fixup in the lower...
+git status
+# fix some definitions
+git rebase --edit-todo
+
+# c'mon
+git commit --amend
+
 git push
 
 # put squash or fixup inot desidered lines
