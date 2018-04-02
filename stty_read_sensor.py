@@ -11,6 +11,9 @@ def ReadSensor():
     
     example:
     'Current humdity = 35.0%  temperature = 22.0C  \n'
+    
+    return one json object like:
+    {'hum': 35.0, 'temp': 22.0, 'temp_unit': 'C', 'hum_unit': '%'}
     """
     
     regex = 'Current humdity = (?P<hum>[0-9\.]+)(?P<hum_unit>%)  temperature = (?P<temp>[0-9\.]+)(?P<temp_unit>C)'
