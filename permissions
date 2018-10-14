@@ -1,3 +1,11 @@
+sudo apt-get install acl
+
+# keep in mind to put acl in fstab option to avoid reboot on permission set
+# example:
+# UUID=07aebd28-24e3-cf19-e37d-1af9a23a45d4    /home    ext4   defaults,acl   0   2
+# then remount to get it applied without reboot
+# sudo mount -o remount /home
+
 # To set the group, give /var/www the setgid bit:
 # default group permission on new file base on owner default group 
 chgrp www-data /var/www
@@ -7,7 +15,16 @@ chmod g+ws /var/www
 # This will make all newly created files inherit the parent directory's group, instead of the user's.
 find /var/www -type d -exec chmod g+s {} +
 
-# keep in mind to put acl in fstab option to avoid reboot on permission set
+# The following command will set the ACL recursive, for the user 'yourusername' 
+# to have read, write, and execute permissions on /var/www-data and beyond.
+setfacl -R -m u:yourusername:rwx /var/www-data
+
+# To see the ACL's set for the folder...
+getfacl /var/www-data
+
+# And to remove the ACL you just set...
+setfacl -x u:yourusername /var/www-data
+
 # To set the default group permissions, you will have to use ACLs. Set a "default" ACL:
 setfacl -m "default:group::rwx" /var/www
 
