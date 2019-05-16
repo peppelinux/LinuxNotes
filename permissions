@@ -1,5 +1,12 @@
 sudo apt-get install acl
 
+# easy
+chmod g+s <directory>  //set gid 
+setfacl -d -m g::rwx /<directory>  //set group to rwx default 
+setfacl -d -m o::rx /<directory>   //set other
+
+# other notes
+
 # keep in mind to put acl in fstab option to avoid reboot on permission set
 # example:
 # UUID=07aebd28-24e3-cf19-e37d-1af9a23a45d4    /home    ext4   defaults,acl   0   2
